@@ -1,0 +1,50 @@
+apiVersion: 2018-10-01
+location: westus2
+name: cdw-consul02-20190826
+properties:
+  containers:
+  - name: cdw-consul02-20190826
+    properties:
+      image: consul
+      resources:
+        requests:
+          cpu: 1
+          memoryInGb: 1.5
+      ports:
+      - port: 8300
+      - port: 8301
+      - port: 8302
+      - port: 8500
+      - port: 8600
+      command:
+      - "consul"
+      - "agent"
+      - "-dev"
+      # - "-bind=10.0.0.10"
+      # - "-client=10.0.0.5"
+      # - "-join=10.0.0.4"
+      - "-retry-join=10.0.0.4"
+  osType: Linux
+  networkProfile:
+    id: /subscriptions/b9c770d1-cde9-4da3-ae40-95ce1a4fac0c/resourceGroups/cdw-consul-20190826/providers/Microsoft.Network/networkProfiles/aci-network-profile-cdw-consul-20190826-vnet-containers
+  ipAddress:
+    # dnsNameLabel: cdw-consul02-20190826
+    type: Private
+    ports:
+    - protocol: tcp
+      port: '8300'
+    - protocol: tcp
+      port: '8301'
+    # - protocol: udp
+    #   port: '8301'
+    - protocol: tcp
+      port: '8302'
+    # - protocol: udp
+    #   port: '8302'
+    - protocol: tcp
+      port: '8500'
+    - protocol: tcp
+      port: '8600'
+    # - protocol: udp
+    #   port: '8600'
+type: Microsoft.ContainerInstance/containerGroups
