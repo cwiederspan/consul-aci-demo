@@ -1,0 +1,15 @@
+az group create -n cdw-consul-20190826 -l westus2
+
+az container create \
+  -n cdw-consul01-20190826 \
+  -g cdw-consul-20190826 \
+  -l westus2 \
+  --image consul \
+  --ip-address Private \
+  --dns-name-label cdw-consul01-20190826 \
+  --ports 8300 8301 8302 8500 8600 \
+  --vnet cdw-consul-20190826-vnet \
+  --subnet containers
+
+
+  --command-line "consul agent -dev -client=0.0.0.0 -bind=0.0.0.0"
